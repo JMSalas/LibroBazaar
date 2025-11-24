@@ -1,0 +1,28 @@
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-4">
+        <div class="card shadow-lg mt-5">
+            <div class="card-header bg-info text-dark text-center">
+                <h3 class="mb-0">Iniciar Sesión</h3>
+            </div>
+            <div class="card-body">
+                <form id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nombre de Usuario</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <button type="submit" class="btn btn-info w-100 mt-3">Ingresar</button>
+                    <p class="text-center mt-3 mb-0">
+                        <a class="fw-bold" href="/usuarios/registro">¿No tienes cuenta? Regístrate aquí.</a>
+                    </p>
+                    <div id="loginMessage" class="alert mt-3 d-none" role="alert"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/js/login.js" defer></script>

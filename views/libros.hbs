@@ -1,0 +1,79 @@
+<h2 class="mb-4"><i class="bi bi-bookmarks"></i> Listado de Libros</h2>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {{#each libros}}
+    <div class="col">
+        <div class="card h-100 shadow-sm {{#if sinStock}}border-danger{{/if}}">
+            
+            {{!-- Bloque de Imagen Placeholder --}}
+            <div class="p-3 bg-light d-flex justify-content-center align-items-center" style="height: 250px; overflow: hidden; border-bottom: 1px solid #eee;">
+                {{!-- Lógica condicional para imagen real vs. placeholder --}}
+                {{#if imagenUrl}}
+                    {{!-- Si tienes una URL de imagen en el modelo, úsala --}}
+                    <img src="{{imagenUrl}}" class="img-fluid" alt="Portada del libro {{nombre}}" style="max-height: 100%;">
+                {{else}}
+                    {{!-- Placeholder en escala de grises/blanco y negro --}}
+                    <div class="text-center text-secondary" style="opacity: 0.7;">
+                        <i class="bi bi-book-half display-1"></i>
+                        <p class="mt-2 fw-bold small">IMAGEN NO DISPONIBLE</p>
+                    </div>
+                {{/if}}
+            </div>
+            {{!-- Fin de Bloque de Imagen Placeholder --}}
+
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{nombre}}</h5>
+                
+                {{#if sinStock}}
+                    <p class="card-text text-danger fw-bold">¡AGOTADO!</p>
+                {{else}}
+                    <p class="card-text">Stock: <span class="fw-bold">{{stock_disponible}}</span> unidades</p>
+                {{/if}}
+                
+                <div class="mt-auto">
+                    {{#if sinStock}}
+                        <button class="btn btn-secondary w-100" disabled>Sin Stock</button>
+                    {{else}}
+                        <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#comprarModal-{{id}}" data-libro-nombre="{{nombre}}">
+                            Comprar
+                        </button>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="modal fade" id="comprarModal-{{id}}" tabindex="-1" aria-labelledby="comprarModalLabel-{{id}}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="comprarModalLabel-{{id}}">Comprar: {{nombre}}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="message-container-{{id}}" class="mb-3">
+                        {{!-- El libro.js insertará mensajes aquí --}}
+                    </div>
+
+                    <form id="form-compra-{{id}}" class="form-compra">
+                        <div class="mb-3">
+                            <label for="cantidad-{{id}}" class="form-label">Cantidad a Comprar (Max: {{stock_disponible}})</label>
+                            <input type="number" class="form-control" id="cantidad-{{id}}" name="cantidad" min="1" max="{{stock_disponible}}" required value="1">
+                        </div>
+                        <small class="text-danger" id="error-{{id}}"></small>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary btn-confirmar-compra" data-libro-id="{{id}}" data-libro-nombre="{{nombre}}" id="confirm-button-{{id}}">
+                        Confirmar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+<div class="p-5"></div>
+
+<script src="/js/libros.js" defer></script>
