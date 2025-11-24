@@ -76,6 +76,24 @@ npm start
 
 La aplicación se iniciará en `http://localhost:8080`.
 
+La aplicación cada vez que se reinicia, limpia la base de datos cargando solo un catálogo inicial de libros, sin usuarios ni compras.
+Para modificar este comportamiento editar en /config/inicializarDataBase.js:
+
+```bash
+await sequelize.sync({ force: true }); 
+console.log(chalk.green('Todas las tablas han sido sincronizadas.'));
+    
+await crearLibrosIniciales();
+```
+
+a
+
+```bash
+await sequelize.sync({ force: false }); 
+console.log(chalk.green('Todas las tablas han sido sincronizadas.'));
+    
+// await crearLibrosIniciales();
+```
 -----
 
 ## Estructura del Proyecto
